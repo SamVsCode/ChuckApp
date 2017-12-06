@@ -10,13 +10,16 @@
 module.exports = {
   
     withFacebook: function(req,res,next){
-        passport.authenticate('facebook',{scope : 'email'})(req, res, next);
+        passport.authenticate('facebook',{ scope: ['email'],})(req, res, next);
     },
     facebookRedirect: function(req,res,next){
         passport.authenticate('facebook',{
-            successRedirect : '/',
+            successRedirect : '/home',
             failureRedirect : '/failure'
           })(req, res,next);
+    },
+    successRedirect: function(req,res){
+        res.view('home');
     }
 
 };

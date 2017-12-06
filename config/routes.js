@@ -45,7 +45,8 @@ module.exports.routes = {
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
 
   'GET /auth/facebook': 'AuthController.withFacebook',
-  'GET /auth/facebook/redirect': 'AuthController.facebookRedirect'
+  'GET /auth/facebook/redirect': 'AuthController.facebookRedirect',
+  'GET /home': 'AuthController.successRedirect'
 
 
 

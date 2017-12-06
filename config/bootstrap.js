@@ -11,6 +11,8 @@
 
 module.exports.bootstrap = async function(done) {
 
+  sails.config.passport();
+
   // By convention, this is a good place to set up fake data during development.
   //
   // For example:
