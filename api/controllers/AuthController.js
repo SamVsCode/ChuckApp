@@ -14,12 +14,19 @@ module.exports = {
     },
     facebookRedirect: function(req,res,next){
         passport.authenticate('facebook',{
-            successRedirect : '/home',
+            successRedirect : '/auth/success',
             failureRedirect : '/failure'
           })(req, res,next);
     },
     successRedirect: function(req,res){
-        res.view('home');
+        /**
+         * Todo: Check if our Social sites Passport returned any email.
+         * if no email returned - show a box asking user to enter an email
+         * else redirect user to home route 
+         */
+        
+        console.log(req.user);
+        res.redirect('/home');
     }
 
 };
