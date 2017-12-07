@@ -1,5 +1,6 @@
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
+var jwt = require('jsonwebtoken');
 
 
 /**
@@ -36,6 +37,15 @@ module.exports.passport = function () {
     profileFields: ['id', 'picture.type(large)', 'name', 'displayName', 'gender', 'profileUrl', 'email']
   };
 
+  function attachToken(user,done){
+    var userdata = {
+      id: user.id
+    }
+    var token = jwt.sign(userdata,sails.config.keys.jwt.secret,{
+      expiresIn: 60*60*24*365
+    });
+    done(null,user,token);
+  }
   function onFacebookStrategyAuth(token, refreshToken, profile, done) {
     /**
      * passport callback after authentication complete and returns profile. 
@@ -49,7 +59,7 @@ module.exports.passport = function () {
           facebook_id: profile.id
         });
         if (current_user) {
-          done(null, current_user)
+          attachToken(current_user,done);
         } else {
           // Save new user
           console.log("Profile:", profile);
@@ -71,7 +81,7 @@ module.exports.passport = function () {
             var new_user = await User.create(data).fetch();
             console.log("_______________________");
             console.log(new_user);
-            if (new_user) done(null, new_user);
+            if (new_user) attachToken(new_user,done);
             else console.log("no record found!!");
           } catch (err) {
             done(err, null)

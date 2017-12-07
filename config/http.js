@@ -27,23 +27,30 @@ module.exports.http = {
 
     // Middleware to initialize passportJS
     passportInit: passport.initialize(),
-    passportSession: passport.session(),   
+    passportSession: passport.session(),
 
-     // ╔═╗┬ ┬┌─┐┌┬┐┌─┐┌┬┐  ╔╦╗┬┌┬┐┌┬┐┬  ┌─┐┬ ┬┌─┐┬─┐┌─┐┌─┐
-     // ║  │ │└─┐ │ │ ││││  ║║║│ ││ │││  ├┤ │││├─┤├┬┘├┤ └─┐
-     // ╚═╝└─┘└─┘ ┴ └─┘┴ ┴  ╩ ╩┴─┴┘─┴┘┴─┘└─┘└┴┘┴ ┴┴└─└─┘└─┘
+    // ╔═╗┬ ┬┌─┐┌┬┐┌─┐┌┬┐  ╔╦╗┬┌┬┐┌┬┐┬  ┌─┐┬ ┬┌─┐┬─┐┌─┐┌─┐
+    // ║  │ │└─┐ │ │ ││││  ║║║│ ││ │││  ├┤ │││├─┤├┬┘├┤ └─┐
+    // ╚═╝└─┘└─┘ ┴ └─┘┴ ┴  ╩ ╩┴─┴┘─┴┘┴─┘└─┘└┴┘┴ ┴┴└─└─┘└─┘
 
-    
-    ResponseLocals: function(req,res,next){
+
+    ResponseLocals: function (req, res, next) {
       // res.locals({User: req.user});
-      console.log(req.user);
+      // (req.user === undefined)? '': console.log(req.user); // dev
       res.locals.User = req.user;
       next();
     },
-    
-    
-    
-     /***************************************************************************
+
+    //Remove in production mode
+    requestLogger: function (req, res, next) {
+      console.log("Requested :: ", req.method, req.url);
+      return next();
+    },
+
+
+
+
+    /***************************************************************************
      *                                                                          *
      * The order in which middleware should be run for HTTP requests.           *
      * (This Sails app's routes are handled by the "router" middleware below.)  *
@@ -54,10 +61,13 @@ module.exports.http = {
       'cookieParser',
       'session',
       'bodyParser',
+      'requestLogger',
       'passportInit', // Passport intialization
       'passportSession', // Passport serialization
-      'compress', 
       'ResponseLocals', // Locals to use in views attached to response
+      'compress',
+      'poweredBy',
+      '$custom',
       'router',
       'www',
       'favicon'

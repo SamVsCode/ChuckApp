@@ -14,8 +14,12 @@ module.exports = {
     },
     facebookRedirect: function(req,res,next){
         passport.authenticate('facebook',{
-            successRedirect : '/auth/success',
-            failureRedirect : '/failure'
+            failureRedirect : '/failure',
+            successRedirect: '/auth/success'
+          },(err,user,info)=>{
+              if(err) return res.negotiate(err);
+              if(!user) return res.redirect('/auth/facebook');
+              return res.redirect(`/auth/success?accessToken=${info}`);
           })(req, res,next);
     },
     successRedirect: function(req,res){
@@ -23,10 +27,10 @@ module.exports = {
          * Todo: Check if our Social sites Passport returned any email.
          * if no email returned - show a box asking user to enter an email
          * else redirect user to home route 
+         *  {REMEMBER TO PASS "accessToken" WITH ALL REDIRECTES UNTIL YOU GET TO FINAL HOME ROUTE}
          */
-        
-        console.log(req.user);
-        res.redirect('/home');
+
+        return res.json({auth: true, accessToken: req.query.accessToken});
     }
 
 };

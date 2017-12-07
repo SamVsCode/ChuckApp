@@ -2,11 +2,15 @@
 <div data-role="page" id="foo">
     
         <div data-role="header">
-            <h1><%= User.name %></h1>
+            <% if(User) {%>
+                <h1><%= User.name %></h1>
+            <% } else {%>
+                <h1>Not Logged In</h1>
+            <% } %>
         </div><!-- /header -->
     
         <div role="main" class="ui-content">
-            <p>I'm first in the source order so I'm shown as the page.</p>
+            <a href="/auth/facebook" rel="external" data-ajax="false">Login With Facebook</a>
             <p>View internal page called <a href="#bar">bar</a></p>
         </div><!-- /content -->
     
