@@ -36,7 +36,7 @@ module.exports = function auth(req, res, next) {
     console.log(" ║ │ │├┴┐├┤ │││")
     console.log(" ╩ └─┘┴ ┴└─┘┘└┘")
     console.log(token);
-    req.token = token; // This is the decrypted token or the payload you provided
+    req.current_user = token; // This is the decrypted token or the payload you provided
     next();
   });
 };

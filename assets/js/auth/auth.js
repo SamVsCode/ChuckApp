@@ -1,7 +1,5 @@
 $('document').ready(function () {
-  console.log('bla');
   if (localStorage.getItem('token') === null || localStorage.getItem('token') === "undefined") {
-    console.log('lala');
     if (window.GLOBAL_User === 'undefined' || window.GLOBAL_User === null) {
       return $.mobile.changePage('/login');
     }
