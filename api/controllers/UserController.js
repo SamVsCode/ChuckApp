@@ -7,7 +7,7 @@
 
 module.exports = {
   home: (req, res) => {
-    res.view('home');    
+    res.view('pages/home');    
   }
 
 };

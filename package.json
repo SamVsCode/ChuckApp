@@ -21,6 +21,7 @@
     "socket.io-redis": "4.0.0"
   },
   "devDependencies": {
+    "concurrently": "^3.5.1",
     "eslint": "3.19.0"
   },
   "scripts": {
@@ -28,7 +29,8 @@
     "test": "npm run lint && npm run custom-tests && echo 'Done.'",
     "lint": "node ./node_modules/eslint/bin/eslint . --max-warnings=0 && echo '✔  Your code looks good.'",
     "custom-tests": "echo \"(No other custom tests yet.)\" && echo",
-    "debug": "node debug app.js"
+    "debug": "node debug app.js",
+    "dev": "nodemon --ignore 'assets/**/*.*'"
   },
   "main": "app.js",
   "repository": {

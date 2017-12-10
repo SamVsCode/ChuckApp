@@ -30,7 +30,7 @@ module.exports = {
          *  {REMEMBER TO PASS "accessToken" WITH ALL REDIRECTES UNTIL YOU GET TO FINAL HOME ROUTE}
          */
 
-        return res.json({auth: true, accessToken: req.query.accessToken});
+        return res.view('pages/authsuccess',{auth: true, accessToken: req.query.accessToken});
     }
 
 };
